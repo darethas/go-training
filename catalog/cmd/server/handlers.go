@@ -10,8 +10,6 @@ import (
 
 func getProducts(s *store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
-		// set up our encoder to encode json to the given writer
 		enc := json.NewEncoder(w)
 
 		products, err := s.GetProducts()
@@ -55,7 +53,6 @@ func getProductByID(s *store) http.HandlerFunc {
 
 func decrementProductQuantityByID(s *store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// nothing to return here, just a OK or a not OK
 		id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
 		err := s.DecrementProductQuantityByID(id)
@@ -74,7 +71,6 @@ func decrementProductQuantityByID(s *store) http.HandlerFunc {
 				"error": err.Error(),
 			})
 			return
-			// Decrement returns an error if we try to decrement and have 0 quantity left, I think a bad request is OK
 		}
 		w.WriteHeader(http.StatusOK)
 	}
